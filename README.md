@@ -1,2 +1,2 @@
 # SmartQQ
-A qq obot supported by SmartQQ
+QQ robot supported by SmartQQ
