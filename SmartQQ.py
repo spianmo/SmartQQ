@@ -5,6 +5,7 @@ Refer:http://www.scienjus.com/webqq-analysis-1/
 """
 import json
 import time
+import traceback
 from NetHandler import HttpHandler
 from PIL import Image
 
@@ -68,7 +69,7 @@ class QQ(HttpHandler):
                     loginError = 0
                 except Exception as e:
                     loginError -= 1
-                    print("Error:%s" % e)  # todo
+                    traceback.print_exc("Error:%s" % e)  # todo
                 if ret['retcode'] != 0 or ret2['retcode'] != 0:
                     raise ValueError("Login Retcode=" + str(ret['retcode']))
 
@@ -77,7 +78,7 @@ class QQ(HttpHandler):
                 UIN = ret['result']['uin']
                 print("登陆成功,QQ号：{0} ".format(ret['result']['uin']))
         except Exception as e:
-            print("Error occur: %s ,retrying..." % e)
+            traceback.print_exc("Error occur: %s ,retrying..." % e)
             return self.login(retries=retries - 1)
 
     def get_friends_class(self):
@@ -101,7 +102,7 @@ class QQ(HttpHandler):
             # self.friend_list[] =
             return friends
         except Exception as e:
-            print("Error:%s" % e)
+            traceback.print_exc("Error:%s" % e)
             return
 
     def get_friends_online(self):
@@ -122,7 +123,7 @@ class QQ(HttpHandler):
             online_friends = ret['result']
             return online_friends
         except Exception as e:
-            print("Error %s" % e)
+            traceback.print_exc("Error %s" % e)
             return None
 
     def get_friend_info(self, tuin):
@@ -146,7 +147,7 @@ class QQ(HttpHandler):
             self.friend_list[tuin] = info
             return info
         except Exception as e:
-            print("Error:%s" % e)
+            traceback.print_exc("Error:%s" % e)
             return
 
     def get_groups_list(self):
@@ -168,7 +169,7 @@ class QQ(HttpHandler):
                 self.GroupCodeList[int(t["gid"])] = int(t["code"])
             return self.GroupNameList
         except Exception as e:
-            print("Error %s" % e)
+            traceback.print_exc("Error %s" % e)
             return
 
     def get_group_info(self, gcode):
@@ -187,7 +188,7 @@ class QQ(HttpHandler):
                 return
             return ret['result']
         except Exception as e:
-            print("Error:%s" % e)
+            traceback.print_exc("Error:%s" % e)
             return
 
     def get_discuss_list(self):
@@ -205,7 +206,7 @@ class QQ(HttpHandler):
                 return
             return ret['result']
         except Exception as e:
-            print("Error:%s" % e)
+            traceback.print_exc("Error:%s" % e)
             return
 
     def get_discuss_info(self, did):
@@ -225,7 +226,7 @@ class QQ(HttpHandler):
                 return
             return ret['result']
         except Exception as e:
-            print("Error:%s" % e)
+            traceback.print_exc("Error:%s" % e)
             return
 
     def get_recent_msglist(self):
@@ -250,7 +251,7 @@ class QQ(HttpHandler):
             print(ret['result'])
             return ret['result']
         except Exception as e:
-            print("Error:%s" % e)
+            traceback.print_exc("Error:%s" % e)
             return
 
     def get_current_user(self):
@@ -268,7 +269,7 @@ class QQ(HttpHandler):
             self.current_user_info = ret['result']
             return ret['result']
         except Exception as e:
-            print("Error:%s" % e)
+            traceback.print_exc("Error:%s" % e)
             return
 
     def msg_check(self, errors=5):
@@ -291,7 +292,7 @@ class QQ(HttpHandler):
                     )
                 }, refer='https://d1.web2.qq.com/cfproxy.html?v=20151105001&callback=1')
             except Exception as e:
-                print("Error:%s" % e)
+                traceback.print_exc("Error:%s" % e)
                 return self.msg_check()
             retcode = ret['retcode']
 
@@ -441,7 +442,7 @@ class QQ(HttpHandler):
                 return
             return ret['result']['account']
         except Exception as e:
-            print("Error:%s" % e)
+            traceback.print_exc("Error:%s" % e)
             return
 
     def get_qrtoken(self, qrsig):
